@@ -4,6 +4,8 @@ import { useTheme } from '../context/ThemeContext';
 
 const Header = ({ profile }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState('');
   const { toggleTheme, isLight } = useTheme();
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -15,7 +17,30 @@ const Header = ({ profile }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  // Highlight the nav item for the section currently in view.
+  useEffect(() => {
+    if (!isHome) return undefined;
+    const ids = ['about', 'experience', 'skills', 'projects', 'certifications', 'contact'];
+    const targets = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!targets.length || !('IntersectionObserver' in window)) return undefined;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActiveId(e.target.id);
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    targets.forEach((t) => obs.observe(t));
+    return () => obs.disconnect();
+  }, [isHome]);
+
   const go = (id) => {
+    setMenuOpen(false);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -39,7 +64,7 @@ const Header = ({ profile }) => {
   ];
 
   return (
-    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
+    <header className={`site-header ${isScrolled || menuOpen ? 'is-scrolled' : ''}`}>
       <div className="site-header__inner">
         {isHome ? (
           <a href="#home" className="site-logo" onClick={(e) => { e.preventDefault(); go('home'); }}>
@@ -51,10 +76,16 @@ const Header = ({ profile }) => {
           </Link>
         )}
         <div className="site-header__right">
-          <nav className="site-nav" aria-label="Primary">
+          <nav id="site-nav" className={`site-nav${menuOpen ? ' is-open' : ''}`} aria-label="Primary">
             {isHome &&
               items.map(([id, label]) => (
-                <button key={id} type="button" onClick={() => go(id)}>
+                <button
+                  key={id}
+                  type="button"
+                  className={activeId === id ? 'is-active' : ''}
+                  aria-current={activeId === id ? 'true' : undefined}
+                  onClick={() => go(id)}
+                >
                   {label}
                 </button>
               ))}
@@ -91,6 +122,18 @@ const Header = ({ profile }) => {
                 <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
               </svg>
             )}
+          </button>
+          <button
+            type="button"
+            className="site-menu-toggle"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-expanded={menuOpen}
+            aria-controls="site-nav"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </div>
