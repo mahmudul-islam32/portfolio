@@ -99,6 +99,12 @@ const Header = ({ profile }) => {
               </NavLink>
             )}
             <NavLink
+              to="/blog"
+              className={({ isActive }) => `site-nav__link${isActive ? ' site-nav__link--active' : ''}`}
+            >
+              Blog
+            </NavLink>
+            <NavLink
               to="/learn"
               className={({ isActive }) => `site-nav__link${isActive ? ' site-nav__link--active' : ''}`}
             >

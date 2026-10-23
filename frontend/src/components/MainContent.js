@@ -6,6 +6,7 @@ import Experience from './Experience';
 import Skills from './Skills';
 import Projects from './Projects';
 import Certifications from './Certifications';
+import LatestPosts from './LatestPosts';
 import Footer from './Footer';
 import useScrollReveal from '../hooks/useScrollReveal';
 
@@ -21,6 +22,7 @@ const MainContent = ({ resume }) => {
         <Experience resume={resume} />
         <Skills resume={resume} />
         <Projects resume={resume} />
+        <LatestPosts />
         <Certifications resume={resume} />
         <Footer resume={resume} />
       </div>

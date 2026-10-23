@@ -9,6 +9,9 @@ import LearnLayout from './pages/learn/LearnLayout';
 import LearnCourseGrid from './pages/learn/LearnCourseGrid';
 import LearnCourseRedirect from './pages/learn/LearnCourseRedirect';
 import LearnLessonDoc from './pages/learn/LearnLessonDoc';
+import BlogLayout from './pages/blog/BlogLayout';
+import BlogList from './pages/blog/BlogList';
+import BlogPost from './pages/blog/BlogPost';
 import { resume as fallbackResume } from './data/resume';
 import { STRAPI_URL } from './config/strapi';
 import { buildPortfolio } from './utils/portfolioFromStrapi';
@@ -72,6 +75,10 @@ function App() {
         <div className="site">
           <Routes>
             <Route path="/" element={<MainContent resume={portfolio} />} />
+            <Route path="/blog" element={<BlogLayout resume={portfolio} />}>
+              <Route index element={<BlogList />} />
+              <Route path=":slug" element={<BlogPost />} />
+            </Route>
             <Route path="/learn" element={<LearnLayout resume={portfolio} />}>
               <Route index element={<LearnCourseGrid />} />
               <Route path=":courseSlug/:lessonSlug" element={<LearnLessonDoc />} />
