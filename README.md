@@ -8,6 +8,7 @@ A modern, single-page portfolio application built with React and Strapi (Headles
 - 📱 Mobile-friendly interface
 - 🚀 Fast performance
 - ✏️ Content management through Strapi CMS
+- 📝 Markdown tech blog (`frontend/src/content/posts/`)
 - 🐳 Fully dockerized setup
 - 📦 All content editable from Strapi admin panel
 
@@ -72,6 +73,12 @@ The portfolio supports the following content types in Strapi:
    - Description
    - Type (work/education)
    - Company logo
+
+## Blog
+
+Posts are Markdown files in `frontend/src/content/posts/`, named `YYYY-MM-DD-slug.md`, with `title`, `summary`, and `tags` front matter. They are listed at `/blog` and previewed on the home page. See `frontend/src/content/README.md` for the format.
+
+To build the frontend without Docker: `cd frontend && npm install && npm run build:local`.
 
 ## Getting Started
 
