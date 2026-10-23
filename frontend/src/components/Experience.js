@@ -38,7 +38,13 @@ const Experience = ({ resume }) => {
             <p className="site-card__company">{job.company}</p>
             <p className="site-card__loc">{job.location}</p>
             {job.stack?.length > 0 && (
-              <p className="site-card__stack">{job.stack.join(' · ')}</p>
+              <div className="site-pills site-pills--tight site-card__pills">
+                {job.stack.map((t) => (
+                  <span key={t} className="site-pill site-pill--sm">
+                    {t}
+                  </span>
+                ))}
+              </div>
             )}
             {job.highlights?.length > 0 && (
               <ul>
