@@ -7,7 +7,7 @@ const Projects = ({ resume }) => {
     <section id="projects" className="site-section">
       <div className="site-section__head">
         <p className="site-section__label">Projects</p>
-        <h2 className="site-section__title">Selected build</h2>
+        <h2 className="site-section__title">Selected work</h2>
       </div>
       <div className="site-projects">
         {projects.map((p) => (
@@ -15,15 +15,11 @@ const Projects = ({ resume }) => {
             <div className="site-project__year">{p.year}</div>
             <div className="site-project__body">
               <h3>{p.title}</h3>
-              <p className="site-prose" style={{ fontSize: '0.9375rem' }}>
-                {p.summary}
-              </p>
+              <p className="site-prose site-project__text">{p.summary}</p>
               {p.description && (
-                <p className="site-prose" style={{ fontSize: '0.9375rem', marginTop: '0.65rem' }}>
-                  {p.description}
-                </p>
+                <p className="site-prose site-project__text site-project__text--more">{p.description}</p>
               )}
-              <div className="site-pills" style={{ marginTop: '1rem' }}>
+              <div className="site-pills site-pills--tight">
                 {p.technologies?.map((t, i) => (
                   <span key={`${p.id}-${i}-${t}`} className="site-pill">
                     {t}
@@ -33,12 +29,12 @@ const Projects = ({ resume }) => {
               <div className="site-project__links">
                 {p.githubUrl && (
                   <a className="site-link" href={p.githubUrl} target="_blank" rel="noopener noreferrer">
-                    GitHub
+                    GitHub <span aria-hidden>↗</span>
                   </a>
                 )}
                 {p.liveUrl && (
                   <a className="site-link" href={p.liveUrl} target="_blank" rel="noopener noreferrer">
-                    Live
+                    Live site <span aria-hidden>↗</span>
                   </a>
                 )}
               </div>
