@@ -1,57 +1,62 @@
 /* Portfolio — light / dark themes (tokens on :root) */
 
 :root[data-theme='dark'] {
-  --ink: #070a10;
-  --paper: #0e1118;
-  --elevated: #141a24;
+  --ink: #090b12;
+  --paper: #0f121b;
+  --elevated: #131826;
   --border: rgba(255, 255, 255, 0.08);
-  --text: #eef0f4;
-  --muted: #8b95a8;
-  --faint: #5c6575;
-  --accent: #f0b429;
-  --accent-soft: rgba(240, 180, 41, 0.14);
-  --accent-strong: #ffc94d;
-  --glow: 0 0 80px rgba(240, 180, 41, 0.06);
-  --btn-primary-fg: #070a10;
-  --header-scrolled-bg: rgba(7, 10, 16, 0.88);
+  --text: #f1f3f9;
+  --muted: #9aa3b8;
+  --faint: #667088;
+  --accent: #8b9bff;
+  --accent-2: #38d6c4;
+  --accent-soft: rgba(139, 155, 255, 0.14);
+  --accent-strong: #a5b1ff;
+  --gradient: linear-gradient(120deg, #8b9bff 0%, #38d6c4 100%);
+  --glow: 0 10px 60px rgba(99, 112, 255, 0.14);
+  --btn-primary-fg: #0a0c14;
+  --header-scrolled-bg: rgba(9, 11, 18, 0.8);
   --nav-hover-bg: rgba(255, 255, 255, 0.06);
-  --ghost-hover-border: rgba(240, 180, 41, 0.4);
-  --card-hover-border: rgba(240, 180, 41, 0.25);
-  --link-underline: rgba(240, 180, 41, 0.35);
-  --mesh-1: rgba(240, 180, 41, 0.09);
-  --mesh-2: rgba(59, 130, 246, 0.06);
+  --ghost-hover-border: rgba(139, 155, 255, 0.5);
+  --card-hover-border: rgba(139, 155, 255, 0.35);
+  --link-underline: rgba(139, 155, 255, 0.4);
+  --mesh-1: rgba(99, 112, 255, 0.14);
+  --mesh-2: rgba(56, 214, 196, 0.07);
   --theme-toggle-bg: rgba(255, 255, 255, 0.06);
   --theme-toggle-border: rgba(255, 255, 255, 0.1);
 }
 
 :root[data-theme='light'] {
-  --ink: #fbf9f5;
+  --ink: #f7f8fc;
   --paper: #ffffff;
-  --elevated: #f3efe8;
-  --border: rgba(20, 18, 14, 0.1);
-  --text: #14120f;
-  --muted: #4f4b44;
-  --faint: #7a756c;
-  --accent: #c2410c;
-  --accent-soft: rgba(194, 65, 12, 0.12);
-  --accent-strong: #ea580c;
-  --glow: 0 12px 48px rgba(194, 65, 12, 0.14);
-  --btn-primary-fg: #fffaf5;
-  --header-scrolled-bg: rgba(251, 249, 245, 0.92);
-  --nav-hover-bg: rgba(20, 18, 14, 0.06);
-  --ghost-hover-border: rgba(194, 65, 12, 0.45);
-  --card-hover-border: rgba(194, 65, 12, 0.32);
-  --link-underline: rgba(194, 65, 12, 0.45);
-  --mesh-1: rgba(194, 65, 12, 0.07);
-  --mesh-2: rgba(59, 130, 246, 0.06);
-  --theme-toggle-bg: rgba(20, 18, 14, 0.05);
-  --theme-toggle-border: rgba(20, 18, 14, 0.1);
+  --elevated: #ffffff;
+  --border: rgba(17, 24, 39, 0.09);
+  --text: #0f1220;
+  --muted: #4b5368;
+  --faint: #7a8296;
+  --accent: #4f46e5;
+  --accent-2: #0d9488;
+  --accent-soft: rgba(79, 70, 229, 0.09);
+  --accent-strong: #4338ca;
+  --gradient: linear-gradient(120deg, #4f46e5 0%, #0d9488 100%);
+  --glow: 0 14px 44px rgba(79, 70, 229, 0.14);
+  --btn-primary-fg: #ffffff;
+  --header-scrolled-bg: rgba(247, 248, 252, 0.82);
+  --nav-hover-bg: rgba(17, 24, 39, 0.05);
+  --ghost-hover-border: rgba(79, 70, 229, 0.5);
+  --card-hover-border: rgba(79, 70, 229, 0.35);
+  --link-underline: rgba(79, 70, 229, 0.4);
+  --mesh-1: rgba(79, 70, 229, 0.09);
+  --mesh-2: rgba(13, 148, 136, 0.07);
+  --theme-toggle-bg: rgba(17, 24, 39, 0.04);
+  --theme-toggle-border: rgba(17, 24, 39, 0.1);
 }
 
 :root {
-  --radius: 14px;
-  --radius-lg: 20px;
-  --max: 920px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --max: 960px;
+  --shadow-sm: 0 1px 2px rgba(10, 12, 24, 0.06), 0 4px 16px rgba(10, 12, 24, 0.06);
   --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -223,10 +228,10 @@
 
 .site-hero__name {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 8vw, 4.25rem);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
   margin-bottom: 0.75rem;
   color: var(--text);
 }
@@ -314,9 +319,10 @@
 }
 
 .site-section__label {
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 0.5rem;
@@ -324,17 +330,19 @@
 
 .site-section__title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-size: clamp(1.75rem, 4vw, 2.375rem);
   font-weight: 700;
+  line-height: 1.15;
   letter-spacing: -0.03em;
   color: var(--text);
 }
 
 .site-prose {
   font-size: 1.0625rem;
-  line-height: 1.8;
+  line-height: 1.75;
   color: var(--muted);
   max-width: 42rem;
+  text-wrap: pretty;
 }
 
 .site-prose p + p {

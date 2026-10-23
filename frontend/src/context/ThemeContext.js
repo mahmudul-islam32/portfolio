@@ -30,7 +30,7 @@ export function ThemeProvider({ children }) {
     }
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
-      meta.setAttribute('content', theme === 'light' ? '#fbf9f5' : '#070a10');
+      meta.setAttribute('content', theme === 'light' ? '#f7f8fc' : '#090b12');
     }
   }, [theme]);
 
