@@ -1,0 +1,122 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getPosts, postUrl, formatDate, readingTime, slugifyTag } from '../../lib/blog';
+import { profile } from '../../data/profile';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+const { title, description, date, updated, tags, lang, image } = post.data;
+const site = Astro.site!;
+const url = new URL(postUrl(post), site).href;
+const de = lang === 'de';
+const toc = headings.filter((h) => h.depth === 2);
+
+const ld = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: title,
+    description,
+    datePublished: date.toISOString(),
+    dateModified: (updated ?? date).toISOString(),
+    inLanguage: lang,
+    url,
+    mainEntityOfPage: url,
+    image: new URL(image ?? '/og.png', site).href,
+    keywords: tags.join(', '),
+    wordCount: (post.body ?? '').split(/\s+/).length,
+    author: { '@type': 'Person', '@id': new URL('/#person', site).href, name: profile.fullName, url: site.href },
+    publisher: { '@type': 'Person', name: profile.fullName },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.href },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: new URL('/blog/', site).href },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+<Base
+  lang={lang}
+  title={`${title} · ${profile.name}`}
+  description={description}
+  type="article"
+  image={image}
+  published={date}
+  updated={updated}
+  jsonLd={ld}
+>
+  <article class="wrap post">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a></nav>
+    <header>
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+      <p class="meta">
+        <time datetime={date.toISOString()}>{formatDate(date, lang)}</time>
+        <span>{readingTime(post.body)} {de ? 'Min. Lesezeit' : 'min read'}</span>
+        {updated && <span>{de ? 'Aktualisiert' : 'Updated'} {formatDate(updated, lang)}</span>}
+      </p>
+      {tags.length > 0 && (
+        <ul class="tags">{tags.map((t) => <li><a class="tag" href={`/blog/tag/${slugifyTag(t)}/`}>{t}</a></li>)}</ul>
+      )}
+    </header>
+
+    {toc.length >= 3 && (
+      <details class="toc">
+        <summary>{de ? 'Inhalt' : 'Contents'}</summary>
+        <ol>{toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+      </details>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <aside class="author">
+      <p><strong>{profile.name}</strong> {de
+        ? 'ist Software Engineer in Celle und baut Backend- und Full-Stack-Systeme mit Python, TypeScript und LLMs.'
+        : 'is a software engineer in Celle, Germany, building backend and full-stack systems with Python, TypeScript and LLMs.'}
+        {' '}<a href={de ? '/de/' : '/'}>{de ? 'Mehr über mich' : 'More about me'}</a></p>
+    </aside>
+
+    <nav class="pager" aria-label={de ? 'Weitere Beiträge' : 'More posts'}>
+      {older ? <a href={postUrl(older)} rel="prev"><span>{de ? 'Älter' : 'Older'}</span>{older.data.title}</a> : <span />}
+      {newer && <a href={postUrl(newer)} rel="next" class="next"><span>{de ? 'Neuer' : 'Newer'}</span>{newer.data.title}</a>}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .post { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+  .post > * { max-width: 42rem; }
+  .crumbs { font-size: 0.9rem; color: var(--ink-3); margin-bottom: 1.5rem; }
+  .crumbs a { color: var(--ink-2); }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 1rem; }
+  .lede { font-size: 1.2rem; color: var(--ink-2); line-height: 1.5; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: 0.9rem; color: var(--ink-3); }
+  .tags { list-style: none; padding: 0; margin: 0 0 2.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  header { border-bottom: 1px solid var(--rule); margin-bottom: 2.5rem; }
+  .toc { margin-bottom: 2.5rem; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 0.75rem 1rem; }
+  .toc summary { cursor: pointer; font-weight: 600; }
+  .toc ol { margin: 0.75rem 0 0.25rem; padding-left: 1.3rem; }
+  .author { margin-top: 3.5rem; padding: 1.25rem 1.4rem; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); font-size: 0.975rem; }
+  .author p { margin: 0; }
+  .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
+  .pager a { display: grid; gap: 0.2rem; text-decoration: none; color: var(--ink); font-weight: 600; padding: 1rem; border: 1px solid var(--rule); border-radius: 8px; }
+  .pager a:hover { border-color: var(--accent); }
+  .pager span { font-size: 0.8rem; font-weight: 500; color: var(--ink-3); }
+  .pager .next { text-align: right; grid-column: 2; }
+  @media (max-width: 40rem) { .pager { grid-template-columns: 1fr; } .pager .next { grid-column: 1; } }
+</style>

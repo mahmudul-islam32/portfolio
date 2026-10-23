@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts, slugifyTag } from '../../lib/blog';
+import { profile } from '../../data/profile';
+
+const posts = await getPosts();
+const tagCounts = new Map<string, number>();
+posts.forEach((p) => p.data.tags.forEach((t) => tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1)));
+const tags = [...tagCounts].sort((a, b) => b[1] - a[1]);
+
+const site = Astro.site!;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: `${profile.name} – Blog`,
+  url: new URL('/blog/', site).href,
+  author: { '@id': new URL('/#person', site).href, '@type': 'Person', name: profile.fullName },
+  blogPost: posts.slice(0, 20).map((p) => ({
+    '@type': 'BlogPosting', headline: p.data.title, datePublished: p.data.date.toISOString(),
+    url: new URL(`/blog/${p.id}/`, site).href,
+  })),
+};
+---
+<Base
+  title={`Blog · ${profile.name}`}
+  description="Notes on backend engineering, Python, TypeScript, LLM/RAG and shipping software in Germany. A new post most days."
+  jsonLd={ld}
+>
+  <div class="wrap page">
+    <header class="head">
+      <h1>Blog</h1>
+      <p class="muted">Short, practical notes from my day-to-day work: backend design, Python and TypeScript, LLM and RAG in production, and the tools around them. Posts are in English or German. <a href="/rss.xml">Subscribe via RSS</a>.</p>
+    </header>
+
+    {tags.length > 0 && (
+      <nav class="tags" aria-label="Topics">
+        {tags.map(([t, n]) => <a class="tag" href={`/blog/tag/${slugifyTag(t)}/`}>{t} <span class="n">{n}</span></a>)}
+      </nav>
+    )}
+
+    {posts.length > 0
+      ? <PostList posts={posts} headingLevel={2} />
+      : <p>No posts yet. Run <code>npm run new-post "Your title"</code> to write the first one.</p>}
+  </div>
+</Base>
+
+<style>
+  .page { padding-block: clamp(3rem, 7vw, 5rem); }
+  .head { margin-bottom: 2rem; max-width: 42rem; }
+  h1 { font-size: clamp(2.5rem, 6vw, 3.75rem); letter-spacing: -0.035em; margin-bottom: 1rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 2.5rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--rule); }
+  .n { color: var(--ink-3); margin-left: 0.15rem; }
+</style>

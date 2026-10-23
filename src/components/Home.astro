@@ -1,0 +1,241 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../data/portrait.png';
+import PostList from './PostList.astro';
+import { profile, type Lang } from '../data/profile';
+import { t } from '../i18n/ui';
+import { getPosts } from '../lib/blog';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const tr = t(lang);
+const L = <T extends Record<Lang, string>>(o: T) => o[lang];
+
+const latest = (await getPosts()).slice(0, 3);
+const langs = profile.languages
+  .map((l) => `${L(l.name)} ${typeof l.level === 'string' ? l.level : L(l.level)}`)
+  .join(', ');
+const q = lang === 'de' ? ['„', '“'] : ['“', '”'];
+
+const facts: [string, string, boolean?][] = [
+  [tr('facts.role'), L(profile.role)],
+  [tr('facts.based'), `${profile.location.city}, ${lang === 'de' ? 'Deutschland' : 'Germany'}`],
+  [tr('facts.experience'), tr('facts.years')],
+  [tr('facts.degree'), `${L(profile.education.degree)}, ${profile.education.school}`],
+  [tr('facts.languages'), langs],
+];
+if (L(profile.workPermit)) facts.push([tr('facts.permit'), L(profile.workPermit)]);
+if (L(profile.availability)) facts.push([tr('facts.status'), L(profile.availability), true]);
+
+const icon = {
+  download: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  mail: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="4.5" width="15" height="11" rx="1.5"/><path d="m3 5.5 7 5.5 7-5.5" stroke-linejoin="round"/></svg>',
+};
+---
+<section class="hero wrap" aria-labelledby="name">
+  <div class="hero-text">
+    <p class="role">{L(profile.role)}</p>
+    <h1 id="name">{profile.name}</h1>
+    <p class="headline">{L(profile.headline)}</p>
+    <p class="intro muted">{L(profile.intro)}</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href={profile.cvFile} download><Fragment set:html={icon.download} />{tr('hero.cv')}</a>
+      <a class="btn btn-ghost" href={`mailto:${profile.email}`}><Fragment set:html={icon.mail} />{tr('hero.email')}</a>
+    </div>
+    <p class="links">
+      <a href={profile.linkedin} rel="me">LinkedIn</a>
+      <a href={profile.github} rel="me">GitHub</a>
+      <a href={`mailto:${profile.email}`}>{profile.email}</a>
+    </p>
+  </div>
+
+  <aside class="sheet" aria-labelledby="facts-title">
+    <Image src={portrait} alt={`${lang === 'de' ? 'Porträt von' : 'Portrait of'} ${profile.name}`} widths={[240, 480]} sizes="240px" class="portrait" loading="eager" fetchpriority="high" />
+    <div class="record">
+      <h2 id="facts-title" class="record-head"><span>{tr('facts.title')}</span></h2>
+      <dl>
+        {facts.map(([k, v, live]) => (
+          <div class={live ? 'live' : undefined}>
+            <dt>{k}</dt>
+            <dd>{live && <span class="dot" aria-hidden="true" />}{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </aside>
+</section>
+
+<section class="impact-band" aria-labelledby="impact-title">
+  <div class="wrap">
+    <h2 id="impact-title" class="visually-quiet">{tr('impact.title')}</h2>
+    <ul class="impact">
+      {profile.impact.map((i) => (
+        <li><strong>{i.value}</strong><span>{L(i.label)}</span></li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section id="experience" class="section wrap" aria-labelledby="exp-title">
+  <div class="section-head"><h2 id="exp-title">{tr('exp.title')}</h2></div>
+  <ol class="timeline">
+    {profile.experience.map((job) => (
+      <li>
+        <p class="when mono">{job.from} – {job.to ?? tr('exp.present')}</p>
+        <div class="job">
+          <h3>{L(job.title)}</h3>
+          <p class="where">{job.company}, {job.place}</p>
+          <ul class="points">
+            {job.points.map((pt) => <li>{L(pt)}</li>)}
+          </ul>
+          <ul class="stack" aria-label="Tech stack">
+            {job.stack.map((s) => <li class="tag">{s}</li>)}
+          </ul>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<section id="skills" class="section wrap" aria-labelledby="skills-title">
+  <div class="section-head"><h2 id="skills-title">{tr('skills.title')}</h2></div>
+  <dl class="skills">
+    {profile.skills.map((s) => (
+      <div>
+        <dt>{L(s.group)}</dt>
+        <dd>{s.items.join(', ')}</dd>
+      </div>
+    ))}
+  </dl>
+</section>
+
+<section class="section wrap two-col" aria-label={`${tr('edu.title')}, ${tr('refs.title')}`}>
+  <div>
+    <h2>{tr('edu.title')}</h2>
+    <h3 class="edu-degree">{L(profile.education.degree)}</h3>
+    <p class="where">{profile.education.school}, {profile.education.year}</p>
+    <p class="muted">{L(profile.education.thesis)}</p>
+    <h3 class="certs-title">{tr('edu.certs')}</h3>
+    <ul class="plain">{profile.certificates.map((c) => <li>{c}</li>)}</ul>
+  </div>
+  <div>
+    <h2>{tr('refs.title')}</h2>
+    {profile.references.map((r) => (
+      <figure class="ref">
+        <blockquote lang="en">{q[0]}{r.quote}{q[1]}</blockquote>
+        <figcaption><strong>{r.who}</strong><br /><span class="muted">{L(r.what)}</span></figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
+
+{latest.length > 0 && (
+  <section class="section wrap" aria-labelledby="blog-title">
+    <div class="section-head">
+      <h2 id="blog-title">{tr('blog.title')}</h2>
+      <a href="/blog/">{tr('blog.all')}</a>
+    </div>
+    <PostList posts={latest} lang={lang} />
+  </section>
+)}
+
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 id="contact-title">{tr('contact.title')}</h2>
+    <p class="measure">{tr('contact.text')}</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href={`mailto:${profile.email}`}><Fragment set:html={icon.mail} />{profile.email}</a>
+      <a class="btn btn-ghost" href={profile.linkedin} rel="me">LinkedIn</a>
+      <a class="btn btn-ghost" href={profile.cvFile} download><Fragment set:html={icon.download} />{tr('hero.cv')}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hero */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1fr) 22rem; gap: clamp(2rem, 6vw, 5rem);
+    padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 6vw, 4.5rem); align-items: start;
+  }
+  .role { color: var(--accent); font-weight: 600; margin-bottom: 0.75rem; }
+  h1 { font-size: clamp(2.75rem, 7vw, 5rem); letter-spacing: -0.035em; line-height: 0.98; margin-bottom: 1.5rem; }
+  .headline { font-size: clamp(1.3rem, 2.4vw, 1.65rem); line-height: 1.3; font-weight: 500; max-width: 30ch; letter-spacing: -0.01em; margin-bottom: 1.25rem; }
+  .intro { max-width: 38rem; margin-bottom: 2rem; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin-top: 1.5rem; font-size: 0.95rem; }
+
+  /* Fact sheet: a single "record", like a row in a table */
+  .sheet { display: grid; gap: 0; }
+  .portrait { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px 10px 0 0; border: 1px solid var(--rule); border-bottom: 0; }
+  .record { background: var(--surface); border: 1px solid var(--rule); border-radius: 0 0 10px 10px; overflow: hidden; }
+  .record-head {
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0; padding: 0.6rem 1rem;
+    background: var(--ink); color: var(--paper); font-family: var(--mono);
+  }
+  dl { margin: 0; }
+  .record dl > div { display: grid; grid-template-columns: 6.75rem 1fr; gap: 0.75rem; padding: 0.6rem 1rem; border-top: 1px solid var(--rule); font-size: 0.9rem; line-height: 1.45; }
+  .record dl > div:first-child { border-top: 0; }
+  .record dt { color: var(--ink-3); font-family: var(--mono); font-size: 0.78rem; padding-top: 0.12rem; }
+  .record dd { margin: 0; }
+  .live dd { color: var(--signal); font-weight: 600; }
+  .dot { display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; margin-right: 0.45rem; vertical-align: 0.1em; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 20%, transparent); }
+
+  /* Impact */
+  .impact-band { border-top: 1px solid var(--rule); background: var(--surface); }
+  .visually-quiet { font-size: 0.95rem; font-weight: 600; color: var(--ink-2); padding-top: 1.75rem; letter-spacing: 0; }
+  .impact { list-style: none; margin: 0; padding: 1.25rem 0 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem 2rem; }
+  .impact li { display: grid; gap: 0.35rem; align-content: start; }
+  .impact strong { font-size: clamp(2rem, 4vw, 2.6rem); letter-spacing: -0.03em; line-height: 1; color: var(--accent); }
+  .impact span { font-size: 0.9rem; color: var(--ink-2); line-height: 1.45; max-width: 24ch; }
+
+  /* Timeline: a German-CV style date column */
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline > li { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 0.5rem 2rem; padding-block: 2rem; border-bottom: 1px solid var(--rule); }
+  .timeline > li:first-child { padding-top: 0; }
+  .timeline > li:last-child { border-bottom: 0; }
+  .when { color: var(--ink-3); padding-top: 0.2rem; margin: 0; }
+  .job h3 { font-size: 1.25rem; }
+  .where { color: var(--accent); font-weight: 600; margin: 0.2rem 0 0.75rem; font-size: 0.975rem; }
+  .points { margin: 0 0 1rem; padding-left: 1.1rem; max-width: 46rem; }
+  .points li { margin-bottom: 0.4rem; }
+  .points li::marker { color: var(--ink-3); }
+  .stack { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 3rem; }
+  .skills > div { display: grid; grid-template-columns: 9.5rem 1fr; gap: 1rem; padding-block: 0.9rem; border-top: 1px solid var(--rule); }
+  .skills dt { font-weight: 600; }
+  .skills dd { margin: 0; color: var(--ink-2); }
+
+  /* Education + references */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem clamp(2rem, 6vw, 5rem); }
+  .two-col h2 { margin-bottom: 1.5rem; }
+  .edu-degree { font-size: 1.2rem; }
+  .certs-title { margin: 2rem 0 0.6rem; font-size: 1rem; }
+  .plain { list-style: none; padding: 0; margin: 0; }
+  .plain li { padding: 0.45rem 0; border-top: 1px solid var(--rule); color: var(--ink-2); }
+  .ref { margin: 0 0 2rem; }
+  .ref blockquote { margin: 0 0 0.75rem; font-size: 1.15rem; line-height: 1.5; font-weight: 500; letter-spacing: -0.005em; }
+  .ref figcaption { font-size: 0.925rem; }
+
+  /* Contact */
+  .contact { background: var(--ink); color: var(--paper); border-top: 0; }
+  .contact h2 { font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.03em; margin-bottom: 1rem; }
+  .contact p { color: color-mix(in srgb, var(--paper) 80%, var(--ink)); margin-bottom: 2rem; }
+  .contact .btn-primary { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .contact .btn-ghost { color: var(--paper); border-color: color-mix(in srgb, var(--paper) 45%, var(--ink)); }
+  .contact .btn-ghost:hover { background: color-mix(in srgb, var(--paper) 10%, transparent); }
+  .contact :focus-visible { outline-color: var(--paper); }
+
+  @media (max-width: 60rem) {
+    .hero { grid-template-columns: 1fr; }
+    .sheet { max-width: 26rem; }
+    .impact { grid-template-columns: repeat(2, 1fr); }
+    .skills, .two-col { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 40rem) {
+    .timeline > li { grid-template-columns: 1fr; padding-block: 1.5rem; }
+    .skills > div { grid-template-columns: 1fr; gap: 0.15rem; }
+    .record dl > div { grid-template-columns: 5.75rem 1fr; }
+  }
+</style>

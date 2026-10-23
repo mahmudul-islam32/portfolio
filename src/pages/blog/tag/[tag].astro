@@ -1,0 +1,33 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostList from '../../../components/PostList.astro';
+import { getPosts, slugifyTag } from '../../../lib/blog';
+import { profile } from '../../../data/profile';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = new Map<string, string>();
+  posts.forEach((p) => p.data.tags.forEach((t) => tags.set(slugifyTag(t), t)));
+  return [...tags].map(([slug, name]) => ({
+    params: { tag: slug },
+    props: { name, posts: posts.filter((p) => p.data.tags.some((t) => slugifyTag(t) === slug)) },
+  }));
+}
+const { name, posts } = Astro.props;
+---
+<Base
+  title={`Posts about ${name} · ${profile.name}`}
+  description={`Blog posts by ${profile.name} about ${name}.`}
+  noindex={posts.length < 3}
+>
+  <div class="wrap page">
+    <p><a href="/blog/">All posts</a></p>
+    <h1>Posts about {name}</h1>
+    <PostList posts={posts} headingLevel={2} />
+  </div>
+</Base>
+
+<style>
+  .page { padding-block: clamp(3rem, 7vw, 5rem); }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.03em; margin: 0.5rem 0 2.5rem; }
+</style>

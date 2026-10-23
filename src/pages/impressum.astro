@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import { legal } from '../data/profile';
+---
+<Base lang="de" title="Impressum · Mahmudul Islam" description="Impressum und Anbieterkennzeichnung von mdislam.dev." noindex>
+  <div class="wrap legal">
+    <div class="prose">
+      <h1>Impressum</h1>
+      <p lang="en" class="muted">Legal notice required by German law. <a href="/">Back to the English site</a>.</p>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {legal.name}<br />
+        {legal.street}<br />
+        {legal.city}<br />
+        {legal.country}
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href={`mailto:${legal.email}`}>{legal.email}</a></p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>{legal.name}, Anschrift wie oben.</p>
+
+      <h2>Haftung für Inhalte</h2>
+      <p>Die Inhalte dieser Seite wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen. Die Blogbeiträge geben meine persönliche Meinung wieder und stellen keine Rechts-, Steuer- oder sonstige Beratung dar.</p>
+
+      <h2>Haftung für Links</h2>
+      <p>Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.</p>
+
+      <h2>Urheberrecht</h2>
+      <p>Texte, Bilder und Code auf dieser Website unterliegen dem deutschen Urheberrecht, sofern nicht anders angegeben. Codebeispiele in Blogbeiträgen dürfen frei verwendet werden.</p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .legal { padding-block: clamp(3rem, 7vw, 5rem); }
+  h1 { font-size: clamp(2.25rem, 5vw, 3rem); letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+</style>

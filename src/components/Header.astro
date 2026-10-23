@@ -1,0 +1,60 @@
+---
+import type { Lang } from '../data/profile';
+import { profile } from '../data/profile';
+import { t } from '../i18n/ui';
+
+interface Props { lang: Lang; alternates?: Partial<Record<Lang, string>> }
+const { lang, alternates } = Astro.props;
+const tr = t(lang);
+const home = lang === 'de' ? '/de/' : '/';
+const other: Lang = lang === 'de' ? 'en' : 'de';
+const switchHref = alternates?.[other] ?? (other === 'de' ? '/de/' : '/');
+const path = Astro.url.pathname;
+const onBlog = path.startsWith('/blog');
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href={home} aria-label={`${profile.name}, home`}>
+      <span class="mark" aria-hidden="true">MI</span>
+      <span class="brand-name">{profile.name}</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li class="hide-sm"><a href={`${home}#experience`}>{tr('nav.experience')}</a></li>
+        <li class="hide-sm"><a href={`${home}#skills`}>{tr('nav.skills')}</a></li>
+        <li><a href="/blog/" aria-current={onBlog ? 'page' : undefined}>{tr('nav.blog')}</a></li>
+        <li><a href={`${home}#contact`}>{tr('nav.contact')}</a></li>
+        <li><a class="lang" href={switchHref} hreflang={other} lang={other} title={tr('nav.switchLabel')}>{other.toUpperCase()}</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 4rem; gap: 1rem; }
+  .brand { display: flex; align-items: center; gap: 0.65rem; color: var(--ink); text-decoration: none; font-weight: 700; }
+  .mark {
+    display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 6px;
+    background: var(--ink); color: var(--paper); font-size: 0.8rem; letter-spacing: 0.02em;
+  }
+  ul { display: flex; gap: clamp(0.75rem, 2.5vw, 1.75rem); list-style: none; margin: 0; padding: 0; align-items: center; }
+  nav a { color: var(--ink-2); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+  nav a:hover, nav a[aria-current] { color: var(--ink); }
+  nav a[aria-current] { text-decoration: underline; text-underline-offset: 0.4em; }
+  .lang {
+    border: 1px solid var(--rule); border-radius: 5px; padding: 0.2rem 0.45rem;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.03em;
+  }
+  .lang:hover { border-color: var(--ink-2); }
+  @media (max-width: 40rem) {
+    .hide-sm { display: none; }
+    .brand-name { display: none; }
+  }
+</style>
