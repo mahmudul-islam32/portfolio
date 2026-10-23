@@ -7,8 +7,11 @@ import Skills from './Skills';
 import Projects from './Projects';
 import Certifications from './Certifications';
 import Footer from './Footer';
+import useScrollReveal from '../hooks/useScrollReveal';
 
 const MainContent = ({ resume }) => {
+  useScrollReveal('.site-section');
+
   return (
     <main className="site-main">
       <Header profile={resume.profile} />
