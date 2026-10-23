@@ -9,6 +9,7 @@ const Footer = ({ resume }) => {
     <footer id="contact" className="site-footer">
       <div className="site-footer__links">
         <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        {profile.phone && <a href={`tel:${profile.phone.replace(/\s+/g, '')}`}>{profile.phone}</a>}
         {links.github && (
           <a href={links.github} target="_blank" rel="noopener noreferrer">
             GitHub
