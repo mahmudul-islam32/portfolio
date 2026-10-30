@@ -7,7 +7,7 @@ import { profile } from '../../data/profile';
 const posts = await getPosts();
 const tagCounts = new Map<string, number>();
 posts.forEach((p) => p.data.tags.forEach((t) => tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1)));
-const tags = [...tagCounts].sort((a, b) => b[1] - a[1]);
+const tags = [...tagCounts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
 const site = Astro.site!;
 const ld = {
