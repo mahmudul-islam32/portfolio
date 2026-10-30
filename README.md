@@ -33,6 +33,8 @@ This creates `src/content/blog/YYYY-MM-DD-your-title.md`. Write in Markdown, the
 | `updated` | Optional; set when you revise an old post |
 | `image` | Optional social image path, e.g. `/og/my-post.png` (default: `/og.png`) |
 
+Tags matter beyond topic pages: the end of every post lists up to three related posts, picked by how many tags they share, so reuse existing tags where they fit instead of inventing near-duplicates (`devops` rather than `dev-ops`). On `/blog/`, topics are sorted by post count, then alphabetically.
+
 Images for posts go in `public/images/` and are referenced as `/images/name.png`.
 
 ## Edit your details
