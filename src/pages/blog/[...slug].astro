@@ -8,11 +8,22 @@ export async function getStaticPaths() {
   const posts = await getPosts();
   return posts.map((post, i) => ({
     params: { slug: post.id },
-    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+    props: {
+      post,
+      newer: posts[i - 1],
+      older: posts[i + 1],
+      related: posts
+        .filter((p) => p.id !== post.id)
+        .map((p) => ({ p, shared: p.data.tags.filter((t) => post.data.tags.includes(t)).length }))
+        .filter(({ shared }) => shared > 0)
+        .sort((a, b) => b.shared - a.shared)
+        .slice(0, 3)
+        .map(({ p }) => p),
+    },
   }));
 }
 
-const { post, newer, older } = Astro.props;
+const { post, newer, older, related } = Astro.props;
 const { Content, headings } = await render(post);
 const { title, description, date, updated, tags, lang, image } = post.data;
 const site = Astro.site!;
@@ -91,6 +102,13 @@ const ld = [
         {' '}<a href={de ? '/de/' : '/'}>{de ? 'Mehr über mich' : 'More about me'}</a></p>
     </aside>
 
+    {related.length > 0 && (
+      <section class="related" aria-labelledby="related-title">
+        <h2 id="related-title">{de ? 'Ähnliche Beiträge' : 'Related posts'}</h2>
+        <ul>{related.map((r) => <li><a href={postUrl(r)} lang={r.data.lang}>{r.data.title}</a></li>)}</ul>
+      </section>
+    )}
+
     <nav class="pager" aria-label={de ? 'Weitere Beiträge' : 'More posts'}>
       {older ? <a href={postUrl(older)} rel="prev"><span>{de ? 'Älter' : 'Older'}</span>{older.data.title}</a> : <span />}
       {newer && <a href={postUrl(newer)} rel="next" class="next"><span>{de ? 'Neuer' : 'Newer'}</span>{newer.data.title}</a>}
@@ -113,6 +131,9 @@ const ld = [
   .toc ol { margin: 0.75rem 0 0.25rem; padding-left: 1.3rem; }
   .author { margin-top: 3.5rem; padding: 1.25rem 1.4rem; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); font-size: 0.975rem; }
   .author p { margin: 0; }
+  .related { margin-top: 2.5rem; }
+  .related h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .related ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.4rem; }
   .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
   .pager a { display: grid; gap: 0.2rem; text-decoration: none; color: var(--ink); font-weight: 600; padding: 1rem; border: 1px solid var(--rule); border-radius: 8px; }
   .pager a:hover { border-color: var(--accent); }
