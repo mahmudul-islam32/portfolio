@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getPosts, postUrl, formatDate, readingTime, slugifyTag } from '../../lib/blog';
+import { getPosts, postUrl, formatDate, readingTime, wordCount, slugifyTag } from '../../lib/blog';
 import { profile } from '../../data/profile';
 
 export async function getStaticPaths() {
@@ -33,7 +33,7 @@ const ld = [
     mainEntityOfPage: url,
     image: new URL(image ?? '/og.png', site).href,
     keywords: tags.join(', '),
-    wordCount: (post.body ?? '').split(/\s+/).length,
+    wordCount: wordCount(post.body),
     author: { '@type': 'Person', '@id': new URL('/#person', site).href, name: profile.fullName, url: site.href },
     publisher: { '@type': 'Person', name: profile.fullName },
   },

@@ -10,9 +10,13 @@ export async function getPosts(): Promise<Post[]> {
 
 export const postUrl = (p: Post) => `/blog/${p.id}/`;
 
+/** Words of prose, ignoring fenced code blocks. */
+export function wordCount(body = ''): number {
+  return body.replace(/```[\s\S]*?```/g, ' ').split(/\s+/).filter(Boolean).length;
+}
+
 export function readingTime(body = ''): number {
-  const words = body.replace(/```[\s\S]*?```/g, ' ').split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.round(words / 220));
+  return Math.max(1, Math.round(wordCount(body) / 220));
 }
 
 export const slugifyTag = (tag: string) =>
