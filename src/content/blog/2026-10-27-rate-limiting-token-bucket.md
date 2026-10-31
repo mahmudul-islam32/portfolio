@@ -2,7 +2,7 @@
 title: "Rate limiting APIs with the token bucket algorithm"
 description: "How the token bucket works, why it handles bursts better than a fixed window, and what to think about when you run it across several servers."
 date: 2026-10-27
-tags: [api, backend, redis, architecture]
+tags: [api-design, backend, redis, architecture]
 lang: en
 ---
 
