@@ -105,7 +105,7 @@ const ld = [
     {related.length > 0 && (
       <section class="related" aria-labelledby="related-title">
         <h2 id="related-title">{de ? 'Ähnliche Beiträge' : 'Related posts'}</h2>
-        <ul>{related.map((r) => <li><a href={postUrl(r)} lang={r.data.lang}>{r.data.title}</a></li>)}</ul>
+        <ul>{related.map((r) => <li><a href={postUrl(r)} lang={r.data.lang}>{r.data.title}</a> <time datetime={r.data.date.toISOString()}>{formatDate(r.data.date, lang)}</time></li>)}</ul>
       </section>
     )}
 
@@ -134,6 +134,7 @@ const ld = [
   .related { margin-top: 2.5rem; }
   .related h2 { font-size: 1.1rem; margin-bottom: 0.75rem; }
   .related ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.4rem; }
+  .related time { font-size: 0.85rem; color: var(--ink-3); margin-left: 0.35rem; }
   .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
   .pager a { display: grid; gap: 0.2rem; text-decoration: none; color: var(--ink); font-weight: 600; padding: 1rem; border: 1px solid var(--rule); border-radius: 8px; }
   .pager a:hover { border-color: var(--accent); }
