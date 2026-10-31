@@ -2,7 +2,7 @@
 title: "Database connection pooling: what it is and how to size it"
 description: "Why opening a database connection per request hurts, how a connection pool fixes it, and how to choose pool sizes that do not overload your database."
 date: 2026-10-28
-tags: [database, backend, postgres, performance]
+tags: [databases, backend, postgres, performance]
 lang: en
 ---
 
