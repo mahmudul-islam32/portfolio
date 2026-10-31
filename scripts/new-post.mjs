@@ -12,7 +12,9 @@ if (!title) {
   process.exit(1);
 }
 
-const today = new Date().toISOString().slice(0, 10);
+// Local date, not UTC, so a post written just after midnight gets today's date.
+const now = new Date();
+const today = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-');
 const slug = title.toLowerCase()
   .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
   .normalize('NFKD').replace(/[̀-ͯ]/g, '')
