@@ -24,8 +24,8 @@ This creates `src/content/blog/YYYY-MM-DD-your-title.md`. Write in Markdown, the
 
 | Field | What it's for |
 |---|---|
-| `title` | Post title, also the Google headline (keep it under ~60 characters) |
-| `description` | One sentence shown in Google and on LinkedIn previews (~150 characters) |
+| `title` | Post title, also the Google headline (aim for ~60 characters; the build fails above 90) |
+| `description` | One sentence shown in Google and on LinkedIn previews (aim for ~150 characters; the build fails above 170) |
 | `date` | Publish date |
 | `tags` | e.g. `[python, fastapi]` – creates topic pages automatically |
 | `lang` | `en` or `de` |
