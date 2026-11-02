@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
+import { profile } from '../data/profile';
 ---
-<Base title="Page not found · Mahmudul Islam" description="This page does not exist." noindex>
+<Base title={`Page not found · ${profile.name}`} description="This page does not exist." noindex>
   <div class="wrap nf">
     <p class="code mono">404</p>
     <h1>This page doesn't exist</h1>
