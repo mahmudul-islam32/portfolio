@@ -21,7 +21,7 @@ const { name, posts } = Astro.props;
   noindex={posts.length < 3}
 >
   <div class="wrap page">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">/</span> <a href="/blog/">Blog</a></nav>
     <h1>Posts about {name}</h1>
     <p class="muted count">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
     <PostList posts={posts} headingLevel={2} />
