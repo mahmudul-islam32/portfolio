@@ -54,3 +54,5 @@ This version has a gap: two identical requests arriving at the same moment could
 ## Takeaway
 
 You cannot prevent failures, but you can make retrying cheap and harmless. If a client is allowed to ask twice, make sure the second answer is the same as the first.
+
+Idempotency makes a retry safe; how often and how quickly the client retries is the other half. I wrote about that in [retrying failed requests with exponential backoff and jitter](/blog/2026-11-03-retries-exponential-backoff-jitter/).
