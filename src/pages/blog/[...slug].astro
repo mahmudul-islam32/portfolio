@@ -137,7 +137,7 @@ const ld = [
   .related time { font-size: 0.85rem; color: var(--ink-3); margin-left: 0.35rem; }
   .pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
   .pager a { display: grid; gap: 0.2rem; text-decoration: none; color: var(--ink); font-weight: 600; padding: 1rem; border: 1px solid var(--rule); border-radius: 8px; }
-  .pager a:hover { border-color: var(--accent); }
+  .pager a:hover, .pager a:focus-visible { border-color: var(--accent); }
   .pager span { font-size: 0.8rem; font-weight: 500; color: var(--ink-3); }
   .pager .next { text-align: right; grid-column: 2; }
   @media (max-width: 40rem) { .pager { grid-template-columns: 1fr; } .pager .next { grid-column: 1; } }
