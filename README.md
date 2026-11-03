@@ -35,6 +35,8 @@ This creates `src/content/blog/YYYY-MM-DD-your-title.md`. Write in Markdown, the
 
 Tags matter beyond topic pages: the end of every post lists up to three related posts, picked by how many tags they share, so reuse existing tags where they fit instead of inventing near-duplicates (`devops` rather than `dev-ops`). On `/blog/`, topics are sorted by post count, then alphabetically.
 
+Posts with three or more `##` headings get a collapsible table of contents at the top, built from those headings, so use `##` for the main sections and `###` below them.
+
 Images for posts go in `public/images/` and are referenced as `/images/name.png`.
 
 ## Edit your details
