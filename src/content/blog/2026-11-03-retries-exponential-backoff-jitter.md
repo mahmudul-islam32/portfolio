@@ -54,7 +54,7 @@ Retries multiply across layers. If a frontend retries three times, and the API i
 - **Retry at one layer**, usually the one closest to the user, and let the inner layers fail fast.
 - **Use a deadline, not just a count.** If the whole request must answer within two seconds, stop retrying when that time is spent, whatever the attempt number.
 
-Some systems go further with a retry budget, allowing retries only while they stay under a small share of total traffic. When most calls are failing, the budget runs out and clients stop adding fuel.
+Some systems go further with a retry budget, allowing retries only while they stay under a small share of total traffic. When most calls are failing, the budget runs out and clients stop adding fuel. A [circuit breaker](/blog/2026-11-04-circuit-breakers-failing-fast/) takes the same idea one step further and stops calling the failing service altogether for a while.
 
 ## Takeaway
 
