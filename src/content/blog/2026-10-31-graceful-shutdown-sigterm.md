@@ -23,7 +23,7 @@ Both Docker and Kubernetes follow this pattern. `docker stop` sends `SIGTERM` an
 A good handler does roughly this, in order:
 
 1. **Stop accepting new work.** Close the listening socket or stop pulling from the queue.
-2. **Tell the load balancer.** In Kubernetes, start failing the readiness probe so the pod is removed from the service endpoints.
+2. **Tell the load balancer.** In Kubernetes, start failing the [readiness probe](/blog/2026-10-29-liveness-readiness-health-checks/) so the pod is removed from the service endpoints.
 3. **Finish in-flight work.** Let open requests complete, with a timeout shorter than the grace period.
 4. **Release resources.** Flush logs and metrics, close database pools and message broker connections.
 5. **Exit with code 0.**
