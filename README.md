@@ -37,6 +37,8 @@ Tags matter beyond topic pages: the end of every post lists up to three related 
 
 Posts with three or more `##` headings get a collapsible table of contents at the top, built from those headings, so use `##` for the main sections and `###` below them.
 
+To link to another post, use its root-relative path, the filename without `.md`, e.g. `[retries](/blog/2026-11-03-retries-exponential-backoff-jitter/)`. Keep the trailing slash so the link matches the canonical URL.
+
 Images for posts go in `public/images/` and are referenced as `/images/name.png`.
 
 ## Edit your details
