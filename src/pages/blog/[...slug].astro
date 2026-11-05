@@ -80,7 +80,7 @@ const ld = [
         {updated && <span>{de ? 'Aktualisiert' : 'Updated'} {formatDate(updated, lang)}</span>}
       </p>
       {tags.length > 0 && (
-        <ul class="tags">{tags.map((t) => <li><a class="tag" href={`/blog/tag/${slugifyTag(t)}/`}>{t}</a></li>)}</ul>
+        <ul class="tags" aria-label={de ? 'Themen' : 'Tags'}>{tags.map((t) => <li><a class="tag" href={`/blog/tag/${slugifyTag(t)}/`}>{t}</a></li>)}</ul>
       )}
     </header>
 
