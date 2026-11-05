@@ -110,8 +110,8 @@ const ld = [
     )}
 
     <nav class="pager" aria-label={de ? 'Weitere Beiträge' : 'More posts'}>
-      {older ? <a href={postUrl(older)} rel="prev"><span>{de ? 'Älter' : 'Older'}</span>{older.data.title}</a> : <span />}
-      {newer && <a href={postUrl(newer)} rel="next" class="next"><span>{de ? 'Neuer' : 'Newer'}</span>{newer.data.title}</a>}
+      {older ? <a href={postUrl(older)} rel="prev" lang={older.data.lang}><span>{de ? 'Älter' : 'Older'}</span>{older.data.title}</a> : <span />}
+      {newer && <a href={postUrl(newer)} rel="next" class="next" lang={newer.data.lang}><span>{de ? 'Neuer' : 'Newer'}</span>{newer.data.title}</a>}
     </nav>
   </article>
 </Base>
