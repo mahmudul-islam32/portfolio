@@ -49,7 +49,7 @@ This version has a gap: two identical requests arriving at the same moment could
 - **Scope keys per client or user**, so one customer cannot collide with another.
 - **Compare the payload.** If the same key arrives with a different body, reject it instead of silently returning an unrelated response.
 - **Expire old keys** after a sensible window so the store does not grow forever.
-- **Make consumers idempotent too.** With message queues that deliver at least once, a handler may see the same message twice, so deduplicate by message ID.
+- **Make consumers idempotent too.** With message queues that deliver at least once, a handler may see the same message twice, so deduplicate by message ID. The [transactional outbox](/blog/2026-11-05-transactional-outbox-pattern/) is one common source of such duplicates.
 
 ## Takeaway
 
