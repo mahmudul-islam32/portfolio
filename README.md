@@ -30,7 +30,7 @@ This creates `src/content/blog/YYYY-MM-DD-your-title.md`. Write in Markdown, the
 | `tags` | e.g. `[python, fastapi]` – creates topic pages automatically |
 | `lang` | `en` or `de` |
 | `draft` | `true` hides the post in production |
-| `updated` | Optional; set when you revise an old post |
+| `updated` | Optional; set when you revise an old post. It is shown under the title and used as `dateModified` in the post's structured data |
 | `image` | Optional social image path, e.g. `/og/my-post.png` (default: `/og.png`) |
 
 Tags matter beyond topic pages: the end of every post lists up to three related posts, picked by how many tags they share, so reuse existing tags where they fit instead of inventing near-duplicates (`devops` rather than `dev-ops`). On `/blog/`, topics are sorted by post count, then alphabetically.
