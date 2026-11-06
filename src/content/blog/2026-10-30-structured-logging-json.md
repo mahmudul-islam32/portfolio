@@ -28,7 +28,7 @@ The value of structured logs comes from consistency. Agree on a few fields that 
 - `service` and `env`: which service and which environment wrote the line.
 - `request_id` or `trace_id`: an identifier that ties together every line from one request.
 
-The request identifier is the one people skip and later regret. When a request passes through an API gateway, two services and a background worker, a shared ID is what lets you follow it from start to finish.
+The request identifier is the one people skip and later regret. When a request passes through an API gateway, two services and a background worker, a shared ID is what lets you follow it from start to finish. I wrote more about generating and propagating that ID in [correlation IDs across services](/blog/2026-11-06-correlation-ids-across-services/).
 
 ## Doing it in Python
 
