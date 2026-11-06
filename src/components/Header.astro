@@ -46,7 +46,7 @@ const onBlog = path.startsWith('/blog');
   }
   ul { display: flex; gap: clamp(0.75rem, 2.5vw, 1.75rem); list-style: none; margin: 0; padding: 0; align-items: center; }
   nav a { color: var(--ink-2); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
-  nav a:hover, nav a[aria-current] { color: var(--ink); }
+  nav a:hover, nav a:focus-visible, nav a[aria-current] { color: var(--ink); }
   nav a[aria-current] { text-decoration: underline; text-underline-offset: 0.4em; }
   .lang {
     border: 1px solid var(--rule); border-radius: 5px; padding: 0.2rem 0.45rem;
