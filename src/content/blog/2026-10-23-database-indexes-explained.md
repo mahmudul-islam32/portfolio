@@ -22,6 +22,8 @@ An index can cover several columns, for example `(customer_id, created_at)`. The
 
 A useful rule of thumb: put the columns you filter on with equality first, and the column you sort or range over last.
 
+The same idea makes deep pagination cheap: an index on the sort columns lets a query continue right after the last row it returned, which is the basis of [keyset pagination](/blog/2026-11-09-keyset-pagination/).
+
 ## The cost side
 
 Indexes are not free:
