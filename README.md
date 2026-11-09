@@ -41,6 +41,8 @@ To link to another post, use its root-relative path, the filename without `.md`,
 
 Images for posts go in `public/images/` and are referenced as `/images/name.png`.
 
+Fenced code blocks are highlighted at build time with the `github-light` and `github-dark` themes (set in `astro.config.mjs`) and follow the reader's light or dark system setting. Markdown tables are fine for comparisons; on narrow screens they scroll sideways instead of squeezing the columns.
+
 ## Edit your details
 
 Everything about you (texts in EN and DE, experience, skills, references, Impressum data) is in **`src/data/profile.ts`**. Interface labels are in `src/i18n/ui.ts`.
