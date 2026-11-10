@@ -33,7 +33,7 @@ This creates `src/content/blog/YYYY-MM-DD-your-title.md`. Write in Markdown, the
 | `updated` | Optional; set when you revise an old post. It is shown under the title and used as `dateModified` in the post's structured data |
 | `image` | Optional social image path, e.g. `/og/my-post.png` (default: `/og.png`) |
 
-Tags matter beyond topic pages: the end of every post lists up to three related posts, picked by how many tags they share, so reuse existing tags where they fit instead of inventing near-duplicates (`devops` rather than `dev-ops`). On `/blog/`, topics are sorted by post count, then alphabetically. Tag pages with fewer than three posts set `noindex` so thin topic URLs stay out of search results until they have enough content.
+Tags matter beyond topic pages: the end of every post lists up to three related posts, picked by how many tags they share (newer posts win ties), so reuse existing tags where they fit instead of inventing near-duplicates (`devops` rather than `dev-ops`). On `/blog/`, topics are sorted by post count, then alphabetically. Tag pages with fewer than three posts set `noindex` so thin topic URLs stay out of search results until they have enough content.
 
 Posts with three or more `##` headings get a collapsible table of contents at the top, built from those headings, so use `##` for the main sections and `###` below them.
 
