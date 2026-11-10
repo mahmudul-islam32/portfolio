@@ -107,6 +107,7 @@ a.tag:hover { border-color: var(--accent); color: var(--accent); }
 .prose hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5em 0; }
 .prose table { border-collapse: collapse; width: 100%; font-size: 0.95em; margin: 1.5em 0; }
 .prose th, .prose td { text-align: left; padding: 0.5em 0.6em; border-bottom: 1px solid var(--rule); }
+.prose th { font-weight: 600; border-bottom-width: 2px; }
 @media (max-width: 40rem) { .prose table { display: block; overflow-x: auto; } }
 
 /* Shiki dual theme */
