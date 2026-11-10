@@ -36,7 +36,7 @@ A `304` still costs a round trip, but it saves the transfer of the body. For lar
 
 For a read endpoint, a simple approach is to compute an ETag from the response body or from a version number stored with the record. Compare it with the incoming `If-None-Match`, and return `304` when they match. Many frameworks and reverse proxies can do the body-hash version for you.
 
-ETags also help with writes. A client can send `If-Match` with the ETag it last saw when updating a record. If someone else changed the record in the meantime, the server responds with `412 Precondition Failed` instead of silently overwriting their work. This is a lightweight form of optimistic locking.
+ETags also help with writes. A client can send `If-Match` with the ETag it last saw when updating a record. If someone else changed the record in the meantime, the server responds with `412 Precondition Failed` instead of silently overwriting their work. This is a lightweight form of optimistic locking, which I cover in more detail in [optimistic locking with a version column](/blog/2026-11-10-optimistic-locking-version-columns/).
 
 ## Things to watch out for
 
