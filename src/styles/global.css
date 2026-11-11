@@ -98,6 +98,7 @@ a.tag:hover { border-color: var(--accent); color: var(--accent); }
 .prose h3 { font-size: 1.2rem; margin: 1.8em 0 0.5em; }
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1em; }
 .prose li { margin-bottom: 0.35em; }
+.prose li > ul, .prose li > ol { margin: 0.35em 0 0; }
 .prose blockquote { margin: 1.5em 0; padding-left: 1.1em; border-left: 3px solid var(--accent); color: var(--ink-2); }
 .prose blockquote > :last-child { margin-bottom: 0; }
 .prose code { font-family: var(--mono); font-size: 0.86em; background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
