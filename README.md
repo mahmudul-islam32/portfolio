@@ -20,7 +20,7 @@ npm run new-post "What I learned about Postgres indexes today"
 npm run new-post "Mein Titel auf Deutsch" -- --de
 ```
 
-This creates `src/content/blog/YYYY-MM-DD-your-title.md`. Write in Markdown, then change `draft: true` to `draft: false` and push. Frontmatter:
+This creates `src/content/blog/YYYY-MM-DD-your-title.md`, using your local date (so a post started just after midnight gets the new day) and a slug of at most 70 characters, with German umlauts written as `ae`, `oe`, `ue` and `ss`. It stops with an error instead of overwriting if that file already exists. Write in Markdown, then change `draft: true` to `draft: false` and push. Frontmatter:
 
 | Field | What it's for |
 |---|---|
