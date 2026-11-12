@@ -45,6 +45,7 @@ There is no perfect answer, but some rules of thumb are widely followed:
 - Keep the access token in memory where possible, rather than in `localStorage`, which any script on the page can read.
 - Put the refresh token in an `HttpOnly`, `Secure` cookie with a sensible `SameSite` setting, so JavaScript cannot read it.
 - If you rely on cookies, think about cross-site request forgery and protect the refresh endpoint accordingly.
+- If the frontend and the auth server are on different origins, the browser only sends that cookie when both sides opt in, so read up on [CORS and credentials](/blog/2026-11-12-cors-preflight-requests/).
 
 ## Practical tips
 
