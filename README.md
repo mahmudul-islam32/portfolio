@@ -35,6 +35,8 @@ This creates `src/content/blog/YYYY-MM-DD-your-title.md`, using your local date 
 
 Tags matter beyond topic pages: the end of every post lists up to three related posts, picked by how many tags they share (newer posts win ties), so reuse existing tags where they fit instead of inventing near-duplicates (`devops` rather than `dev-ops`). On `/blog/`, topics are sorted by post count, then alphabetically. Tag pages with fewer than three posts set `noindex` so thin topic URLs stay out of search results until they have enough content.
 
+Below the related posts, every post links to the next older and newer post by date, so a new post automatically becomes the "Newer" link on the previous one.
+
 Posts with three or more `##` headings get a collapsible table of contents at the top, built from those headings, so use `##` for the main sections and `###` below them.
 
 To link to another post, use its root-relative path, the filename without `.md`, e.g. `[retries](/blog/2026-11-03-retries-exponential-backoff-jitter/)`. Keep the trailing slash so the link matches the canonical URL.
