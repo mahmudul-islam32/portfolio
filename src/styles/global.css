@@ -96,6 +96,7 @@ a.tag:hover { border-color: var(--accent); color: var(--accent); }
 .prose { max-width: 42rem; font-size: 1.0938rem; line-height: 1.7; }
 .prose h2 { font-size: 1.5rem; margin: 2.2em 0 0.6em; }
 .prose h3 { font-size: 1.2rem; margin: 1.8em 0 0.5em; }
+.prose h2, .prose h3 { scroll-margin-top: 5rem; } /* keep anchored headings clear of the sticky header */
 .prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1em; }
 .prose li { margin-bottom: 0.35em; }
 .prose li > ul, .prose li > ol { margin: 0.35em 0 0; }
