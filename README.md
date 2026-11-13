@@ -41,6 +41,8 @@ Posts with three or more `##` headings get a collapsible table of contents at th
 
 To link to another post, use its root-relative path, the filename without `.md`, e.g. `[retries](/blog/2026-11-03-retries-exponential-backoff-jitter/)`. Keep the trailing slash so the link matches the canonical URL.
 
+The RSS feed at `/rss.xml` lists every published post, newest first, with its title, description, date and tags as categories. Drafts never appear in it, so a post shows up in readers once `draft` is `false` and the site is rebuilt.
+
 Images for posts go in `public/images/` and are referenced as `/images/name.png`.
 
 Fenced code blocks are highlighted at build time with the `github-light` and `github-dark` themes (set in `astro.config.mjs`) and follow the reader's light or dark system setting. Markdown tables are fine for comparisons; on narrow screens they scroll sideways instead of squeezing the columns.
