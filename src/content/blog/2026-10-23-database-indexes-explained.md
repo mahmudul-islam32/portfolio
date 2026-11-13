@@ -43,6 +43,8 @@ So the goal is not "index everything", it is "index what your real queries need"
 
 Also keep in mind that the planner may skip an index when a query matches a large share of the table, because reading the table directly is cheaper. That is expected, not a bug.
 
+Sometimes the slow part is not one query but many: a page that runs a fast lookup once per row has an [N+1 query problem](/blog/2026-11-13-n-plus-one-query-problem/), and no index fixes that on its own.
+
 ## Takeaway
 
 An index trades some write speed and storage for much faster reads on specific access patterns. Measure the query, read the plan, and add the index that matches how the data is really queried.
