@@ -33,7 +33,7 @@ A smaller pool with a short queue in front of it usually gives better throughput
 
 ## Watch the total, not one service
 
-The limit that really counts is the database's own maximum connection count. If you run ten replicas of a service and each has a pool of 20, that is up to 200 connections, plus whatever your workers, cron jobs and admin tools open. With autoscaling, that number can jump suddenly and hit the server's limit, at which point new connections are refused.
+The limit that really counts is the database's own maximum connection count. In PostgreSQL that is the `max_connections` setting, which defaults to 100, and managed database services often pick their own value based on the instance size. If you run ten replicas of a service and each has a pool of 20, that is up to 200 connections, plus whatever your workers, cron jobs and admin tools open. With autoscaling, that number can jump suddenly and hit the server's limit, at which point new connections are refused.
 
 When many small processes need to share one database, a separate pooler such as PgBouncer sits between them and the server. Applications connect to the pooler, and it keeps a much smaller number of real connections to PostgreSQL. In transaction pooling mode, a server connection is only held for the length of a transaction, which lets a large number of clients share a few connections. The trade-off is that session-level features, such as session variables or some uses of prepared statements, need care.
 
