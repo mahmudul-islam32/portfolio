@@ -60,6 +60,6 @@ The database can only detect the conflict. Deciding what happens next is a produ
 
 ## When it is not the right tool
 
-If the same row is updated constantly, such as a counter or a stock level, optimistic locking leads to many failed attempts. An atomic update like `SET stock = stock - 1 WHERE stock > 0` avoids the read-modify-write cycle entirely.
+If the same row is updated constantly, such as a counter or a stock level, optimistic locking leads to many failed attempts. An atomic update like `SET stock = stock - 1 WHERE stock > 0` avoids the read-modify-write cycle entirely. For rules that span several rows, the stricter [transaction isolation levels](/blog/2026-11-14-postgres-transaction-isolation-levels/) are another option.
 
 For everything people edit through a form, a version column costs one integer and one extra condition, and it turns a silent data loss into a message the user can act on.
