@@ -45,7 +45,7 @@ The RSS feed at `/rss.xml` lists every published post, newest first, with its ti
 
 Images for posts go in `public/images/` and are referenced as `/images/name.png`.
 
-Fenced code blocks are highlighted at build time with the `github-light` and `github-dark` themes (set in `astro.config.mjs`) and follow the reader's light or dark system setting. Markdown tables are fine for comparisons; on narrow screens they scroll sideways instead of squeezing the columns.
+Fenced code blocks are highlighted at build time with the `github-light` and `github-dark` themes (set in `astro.config.mjs`) and follow the reader's light or dark system setting. Put the language after the opening fence (` ```sql `, ` ```python `, ` ```bash `) to get highlighting; a block without one is shown as plain text. Tabs inside code blocks are shown four spaces wide. Markdown tables are fine for comparisons; on narrow screens they scroll sideways instead of squeezing the columns.
 
 ## Edit your details
 
