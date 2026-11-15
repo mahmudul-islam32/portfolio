@@ -94,6 +94,7 @@ a.tag:hover { border-color: var(--accent); color: var(--accent); }
 
 /* Long-form text (blog, legal) */
 .prose { max-width: 42rem; font-size: 1.0938rem; line-height: 1.7; }
+.prose p, .prose li { text-wrap: pretty; } /* avoid single words alone on the last line */
 .prose h2 { font-size: 1.5rem; margin: 2.2em 0 0.6em; }
 .prose h3 { font-size: 1.2rem; margin: 1.8em 0 0.5em; }
 .prose h2, .prose h3 { scroll-margin-top: 5rem; } /* keep anchored headings clear of the sticky header */
