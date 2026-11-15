@@ -44,4 +44,4 @@ The stricter levels do not make conflicts disappear; they turn silent bugs into 
 
 ## How I choose
 
-I stay on Read Committed for ordinary request handling and protect specific updates with atomic statements or row locks. I use Repeatable Read for read-only reports that need a consistent view. I reach for Serializable when a business rule spans several rows and is hard to express as a single constraint, and I make sure the retry logic is in place before I switch it on.
+I stay on Read Committed for ordinary request handling and protect specific updates with atomic statements or row locks, taken in a consistent order so they do not [deadlock](/blog/2026-11-15-postgres-deadlocks/). I use Repeatable Read for read-only reports that need a consistent view. I reach for Serializable when a business rule spans several rows and is hard to express as a single constraint, and I make sure the retry logic is in place before I switch it on.
