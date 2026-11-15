@@ -37,6 +37,8 @@ Tags matter beyond topic pages: the end of every post lists up to three related 
 
 Below the related posts, every post links to the next older and newer post by date, so a new post automatically becomes the "Newer" link on the previous one.
 
+The reading time under each title is the word count divided by 220, rounded, with a minimum of one minute; fenced code blocks are left out of the count, so code-heavy posts do not look longer than they read. The same word count goes into the post's structured data.
+
 Posts with three or more `##` headings get a collapsible table of contents at the top, built from those headings, so use `##` for the main sections and `###` below them.
 
 To link to another post, use its root-relative path, the filename without `.md`, e.g. `[retries](/blog/2026-11-03-retries-exponential-backoff-jitter/)`. Keep the trailing slash so the link matches the canonical URL.
